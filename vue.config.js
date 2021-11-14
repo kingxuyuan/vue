@@ -2,7 +2,7 @@
  * @Author: 大侠传授两招吧
  * @Date: 2021-11-10 00:16:36
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2021-11-15 03:00:36
+ * @LastEditTime: 2021-11-15 03:24:58
  * @Description:
  */
 const os = require('os');
@@ -205,13 +205,12 @@ module.exports = {
         msTileColor: '#000000',
         appleMobileWebAppCapable: 'yes',
         appleMobileWebAppStatusBarStyle: 'black',
-
         // configure the workbox plugin
         // workboxPluginMode: 'InjectManifest',
         // workboxOptions: {
-        // swSrc is required in InjectManifest mode.
-        //   swSrc: 'dev/sw.js',
-        // ...other Workbox options...
-        // }
+            // swSrc is required in InjectManifest mode.
+            // swSrc: 'dev/sw.js',
+            // ...other Workbox options...
+        // },
     },
 };
