@@ -2,7 +2,7 @@
  * @Author: 大侠传授两招吧
  * @Date: 2021-11-10 00:16:36
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2021-11-15 03:24:58
+ * @LastEditTime: 2021-11-15 03:32:34
  * @Description:
  */
 const os = require('os');
@@ -11,8 +11,8 @@ const WebpackBar = require('webpackbar');
 const TerserPlugin = require('terser-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const { VUE_APP_ENV } = process.env;
-const env = VUE_APP_ENV === 'development';
+const { NODE_ENV } = process.env;
+const env = NODE_ENV === 'development';
 
 const resolve = (dir) => path.resolve(__dirname, dir);
 const params = JSON.parse(process.env.npm_config_argv).original[1]?.split('=') || ['--name', 'default'];
@@ -23,7 +23,7 @@ if (params[0] !== '--name') {
         '操作错误，默认运行yarn serve，切换平台：yarn serve --name=name',
     );
 }
-
+process.env.VUE_APP_PLATFORM = platform;
 const gConfig = require(`./platforms/${platform}/config.json`);
 console.log(gConfig);
 
@@ -102,8 +102,10 @@ module.exports = {
         ];
         config.plugins = [...config.plugins, ...plugins];
 
-        config.output.filename = `js/[name][contenthash].js?`;
-        config.output.chunkFilename = `js/[name][contenthash].js?`;
+        if(!env) {
+            config.output.filename = `js/[name][contenthash].js?`;
+            config.output.chunkFilename = `js/[name][contenthash].js?`;
+        }
         
         config.optimization = {
             ...config.optimization,
