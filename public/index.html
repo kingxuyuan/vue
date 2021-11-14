@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta
+            name="viewport"
+            content=" width=device-width, initial-scale=1.0,shrink-to-fit=no maximum-scale=1.0, minimum-scale=1.0,user-scalable=no, viewport-fit=cover"
+        />
+        <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+        <title><%= VUE_APP_TITLE %></title>
+    </head>
+    <body>
+        <noscript>
+            <strong
+                >We're sorry but <%= VUE_APP_TITLE %> doesn't work properly
+                without JavaScript enabled. Please enable it to
+                continue.</strong
+            >
+        </noscript>
+        <div id="app"></div>
+        <!-- built files will be auto injected -->
+
+        <!-- 统计代码 -->
+        <div style="display: none">
+            <script
+                type="text/javascript"
+                src="https://s4.cnzz.com/z_stat.php?id=1280396670&web_id=1280396670"
+            ></script>
+        </div>
+
+        <!-- 统计代码 -->
+
+        <!-- 解决ios无签名打开是在浏览器 -->
+        <!-- 会刷新页面导致缓存组件无效 -->
+
+        <!-- <script>
+            if (
+                'standalone' in window.navigator &&
+                window.navigator.standalone
+            ) {
+                var noddy,
+                    remotes = false;
+
+                document.addEventListener(
+                    'click',
+                    function (event) {
+                        noddy = event.target;
+
+                        while (
+                            noddy.nodeName !== 'A' &&
+                            noddy.nodeName !== 'HTML'
+                        ) {
+                            noddy = noddy.parentNode;
+                        }
+
+                        if (
+                            'href' in noddy &&
+                            noddy.href.indexOf('http') !== -1 &&
+                            (noddy.href.indexOf(document.location.host) !==
+                                -1 ||
+                                remotes)
+                        ) {
+                            event.preventDefault();
+
+                            document.location.href = noddy.href;
+                        }
+                    },
+                    false,
+                );
+            }
+        </script> -->
+    </body>
+</html>
