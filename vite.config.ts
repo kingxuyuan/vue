@@ -2,7 +2,7 @@
  * @Author: 大侠传授两招吧
  * @Date: 2022-01-05 15:45:58
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2022-01-23 12:26:16
+ * @LastEditTime: 2022-02-18 16:45:28
  * @Description: 
  */
 import path from "path";
@@ -12,6 +12,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import viteCompression from 'vite-plugin-compression';                      // vite 插件压缩
+
 import copy from 'rollup-plugin-copy' //引入插件
 import { getNetworkIp } from './networkIP'
 
@@ -88,6 +89,7 @@ export default ({ mode }) => {
                 output: {
                     entryFileNames: `js/[name][hash].js`,
                     chunkFileNames: `js/[name][hash].js`,
+                    // assetFileNames: `images/[name][hash].[ext]`
                     assetFileNames: `[ext]/[name][hash].[ext]`
                 }
             }

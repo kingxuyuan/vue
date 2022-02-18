@@ -2,7 +2,7 @@
  * @Author: 大侠传授两招吧
  * @Date: 2022-01-05 18:44:46
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2022-01-07 12:51:40
+ * @LastEditTime: 2022-02-18 16:09:20
  * @Description: 路由管理
  */
 import { App } from 'vue';
@@ -30,7 +30,7 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach(() => {
     setTimeout(() => {
-        // NProgress.done();
+        NProgress.done();
     }, 1000);
 })
 

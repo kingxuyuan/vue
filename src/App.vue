@@ -2,7 +2,7 @@
  * @Author: 大侠传授两招吧
  * @Date: 2022-01-05 15:45:58
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2022-02-12 16:37:56
+ * @LastEditTime: 2022-02-18 16:15:48
  * @Description: 
 -->
 <script setup lang="ts">
@@ -28,10 +28,11 @@ watch(() => config.value, (val) => {
 
 <template>
     <el-button>I am ElButton</el-button>
-    <!-- <img alt="Vue logo" src="@/assets/images/logo.png" />
+    <img alt="Vue logo" src="@/assets/images/logo.png" />
     <img alt="Vue logo" src="./assets/images/logo.png" />
     <img alt="Vue logo" src="/img/logo.png" />
-    <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />-->
+    <img alt="Vue logo" src="/img/1.jpg" width="300" />
+    <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
 
     <router-view></router-view>
 
