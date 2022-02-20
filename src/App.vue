@@ -2,7 +2,7 @@
  * @Author: 大侠传授两招吧
  * @Date: 2022-01-05 15:45:58
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2022-02-18 16:15:48
+ * @LastEditTime: 2022-02-20 17:56:28
  * @Description: 
 -->
 <script setup lang="ts">
@@ -17,8 +17,8 @@ const store = useStore();
 store.dispatch(CONFIG_ACTIONS.SET_CONFIG_ACTION);
 const config = computed(() => store.getters.getterConfig)
 
-ElMessage('this is a message.');
-console.log(import.meta.env);
+// ElMessage('this is a message.');
+// console.log(import.meta.env);
 
 watch(() => config.value, (val) => {
     console.log(val);
@@ -27,25 +27,21 @@ watch(() => config.value, (val) => {
 </script>
 
 <template>
-    <el-button>I am ElButton</el-button>
-    <img alt="Vue logo" src="@/assets/images/logo.png" />
+    <!-- <el-button>I am ElButton</el-button> -->
+    <!-- <img alt="Vue logo" src="@/assets/images/logo.png" />
     <img alt="Vue logo" src="./assets/images/logo.png" />
     <img alt="Vue logo" src="/img/logo.png" />
     <img alt="Vue logo" src="/img/1.jpg" width="300" />
-    <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+    <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" /> -->
 
-    <router-view></router-view>
+    <router-view />
 
-    <button @click="$router.push('/home')">去home页</button>
-    <button @click="$router.push('/login')">去login页</button>
+    <!-- <button @click="$router.push('/home')">去home页</button>
+    <button @click="$router.push('/login')">去login页</button> -->
 </template>
 
 <style lang="scss">
 #app {
     text-align: center;
-    color: $text_color;
-    background-color: #2c3e50;
-    margin-top: 60px;
-    transform: translateX(0);
 }
 </style>

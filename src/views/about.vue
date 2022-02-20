@@ -2,7 +2,7 @@
  * @Author: 大侠传授两招吧
  * @Date: 2022-01-05 18:35:11
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2022-02-20 18:09:25
+ * @LastEditTime: 2022-02-20 18:03:07
  * @Description: 
 -->
 <template>
@@ -20,6 +20,6 @@
 
 <style lang="scss">
 .home {
-    height: 150vh;
+    display: block;
 }
 </style>
