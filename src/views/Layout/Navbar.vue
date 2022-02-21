@@ -155,10 +155,8 @@ onMounted(() => {
 })
 
 watch(() => route.path, (path) => {
-    if(['/', '/login'].includes(path)) {
-        if (!navs.value.includes(path)) navs.value.push(path);
-        currentPath.value = path;
-    };
+    if (!navs.value.includes(path) && !['/', '/login'].includes(path)) navs.value.push(path);
+    currentPath.value = path;
 }, {
     immediate: true
 });

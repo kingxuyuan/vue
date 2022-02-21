@@ -2,12 +2,12 @@
  * @Author: 大侠传授两招吧
  * @Date: 2022-01-05 18:35:11
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2022-02-20 18:03:07
+ * @LastEditTime: 2022-02-21 21:18:20
  * @Description: 
 -->
 <template>
-    <div class="home">
-        <h1>home</h1>
+    <div class="about">
+        <h1>about</h1>
     </div>
 </template>
 
@@ -19,7 +19,7 @@
 
 
 <style lang="scss">
-.home {
+.about {
     display: block;
 }
 </style>
