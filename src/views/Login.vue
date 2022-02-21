@@ -2,13 +2,18 @@
  * @Author: 大侠传授两招吧
  * @Date: 2022-01-05 18:50:52
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2022-02-20 18:02:57
+ * @LastEditTime: 2022-02-21 11:49:13
  * @Description: 登录页面
 -->
 <template>
     <div class="login">
         <div class="login-form">
-            <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" @keyup.enter.native="submitForm(ruleFormRef)">
+            <el-form
+                ref="ruleFormRef"
+                :model="ruleForm"
+                :rules="rules"
+                @keyup.enter.native="submitForm(ruleFormRef)"
+            >
                 <el-form-item prop="account">
                     <el-input
                         v-model="ruleForm.account"
@@ -39,7 +44,7 @@
                 </el-form-item>
 
                 <div class="cell">
-                    <el-button type="primary" size="large" @click="submitForm(ruleFormRef)">提交</el-button>
+                    <el-button type="primary" size="large" @click="submitForm(ruleFormRef)" :loading="httpStatus">提交</el-button>
                 </div>
                 <div class="cell">
                     <el-button size="large" @click="resetForm(ruleFormRef)">重置</el-button>
@@ -62,6 +67,7 @@ const router = useRouter();
 
 type FormInstance = InstanceType<typeof ElForm>;
 const ruleFormRef = ref<FormInstance>();
+const httpStatus = ref<boolean>(false);
 
 const ruleForm = reactive({
     account: '',
@@ -98,9 +104,13 @@ const submitForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return
     formEl.validate((valid) => {
         if (valid) {
+            httpStatus.value = true;
             ElMessage.success('登录成功！');
             store.commit(CONFIG_MUTATIONS.SET_TOKEN_MUTATION, 'asdwqewqedasd51d1as56d1');
-            router.push('/home');
+            setTimeout(() => {
+                httpStatus.value = false;
+                router.push('/home');
+            }, 1500);
         }
     })
 }
@@ -114,8 +124,9 @@ const resetForm = (formEl: FormInstance | undefined) => {
 
 <style lang="scss" scoped>
 .login {
-    min-width: 100vw;
-    min-height: 100vh;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
     &-form {
         width: 320px;
         padding: 30px;

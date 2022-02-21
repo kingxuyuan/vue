@@ -2,15 +2,20 @@
  * @Author: 大侠传授两招吧
  * @Date: 2022-02-19 16:48:25
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2022-02-20 18:16:26
+ * @LastEditTime: 2022-02-21 19:26:03
  * @Description: 
 -->
 <template>
-    <div class="layout-silder" :style="{width: `${isCollapse ? 64 : 210}px`}">
+    <div class="layout-silder" :style="{ width: `${isCollapse ? 64 : 210}px` }">
         <div class="layout-silder-top"></div>
         <div class="layout-silder-content">
             <el-scrollbar>
-                <el-menu :collapse="isCollapse" :default-active="activeIndex" router>
+                <el-menu
+                    :collapse="isCollapse"
+                    :default-active="activeIndex"
+                    :unique-opened="true"
+                    router
+                >
                     <SilderMenu :menus="menus" />
                 </el-menu>
             </el-scrollbar>
@@ -34,7 +39,7 @@ import { useRoute } from 'vue-router';
 import { Fold, Expand } from '@element-plus/icons-vue';
 
 import SilderMenu from '@/components/SilderMenu.vue';
-import authRouter from '@/router/authRouter';
+import { MENUS } from '@/router/authRouter';
 
 defineProps({
     isCollapse: {
@@ -48,7 +53,14 @@ const emit = defineEmits(['collapse']);
 const route = useRoute();
 const activeIndex = ref('');
 
-const menus = authRouter[0].children.filter((item, idx) => idx > 0 && item);
+const menus = MENUS.map((item, idx) => {
+    let childrenArr: any[] = [];
+    if (item.children) childrenArr = item.children.filter((item, index) => index > 0);
+    return {
+        ...item,
+        children: childrenArr
+    }
+});
 
 const foldClick = () => {
     emit('collapse');

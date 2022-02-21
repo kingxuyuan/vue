@@ -2,7 +2,7 @@
  * @Author: 大侠传授两招吧
  * @Date: 2022-01-05 18:44:46
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2022-02-19 17:01:13
+ * @LastEditTime: 2022-02-21 20:01:50
  * @Description: 路由管理
  */
 import { App, computed } from 'vue';
@@ -30,12 +30,10 @@ router.beforeEach((to, from, next) => {
     NProgress.start();
     const token = computed(() => store.getters.getterToken).value;
 
-    if(to.meta?.title) (document as any).title = to.meta?.title;
+    if (to.meta?.title) (document as any).title = to.meta?.title;
 
-    if (to.meta?.auth && !token)
-        next('/login');
-    else
-        next();
+    if (to.meta?.auth && !token) next('/login')
+    else next();
 })
 
 router.afterEach(() => {
