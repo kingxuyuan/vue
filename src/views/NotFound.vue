@@ -2,7 +2,7 @@
  * @Author: 大侠传授两招吧
  * @Date: 2022-02-21 20:07:22
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2022-02-21 21:02:38
+ * @LastEditTime: 2022-02-24 13:57:12
  * @Description: 
 -->
 <template>
@@ -53,24 +53,24 @@
             text-align: left;
         }
         h1 {
-            font-size: 32px;
+            font-size: $font-size-32;
             line-height: 40px;
             color: #1482f0;
         }
         h3 {
             color: #222;
-            font-size: 20px;
+            font-size: $font-size-20;
             font-weight: 600;
         }
         h4 {
             margin-top: 20px;
             color: grey;
-            font-size: 13px;
+            font-size: $font-size-13;
             line-height: 22px;
         }
         div {
             margin: 24px 0;
-            font-size: 12px;
+            font-size: $font-size-12;
         }
         span {
             margin-left: 4px;

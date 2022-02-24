@@ -2,7 +2,7 @@
  * @Author: 大侠传授两招吧
  * @Date: 2022-01-05 15:45:58
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2022-02-18 16:45:28
+ * @LastEditTime: 2022-02-23 19:53:23
  * @Description: 
  */
 import path from "path";
@@ -56,7 +56,7 @@ export default ({ mode }) => {
 
         server: {
             host: getNetworkIp(),
-            port: 8888,
+            port: 5000,
             proxy: {
                 '/api': {
                     target: VITE_API_URL,

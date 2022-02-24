@@ -2,7 +2,7 @@
  * @Author: 大侠传授两招吧
  * @Date: 2022-02-19 17:11:45
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2022-02-21 19:43:41
+ * @LastEditTime: 2022-02-24 14:00:36
  * @Description: 
 -->
 <template>
@@ -39,7 +39,7 @@
                                         @tab-click="handleClick"
                                     >
                                         <el-tab-pane label="User" name="1">User</el-tab-pane>
-                                        <el-tab-pane label="Config" name="2">Config</el-tab-pane>
+                                        <el-tab-pane label="Conf" name="2">Conf</el-tab-pane>
                                         <el-tab-pane label="Role" name="3">Role</el-tab-pane>
                                         <el-tab-pane label="Task" name="4">Task</el-tab-pane>
                                     </el-tabs>
@@ -51,7 +51,7 @@
                 <li class="avatar">
                     <el-dropdown @command="avatarhandleCommand">
                         <div class="avatar-name">
-                            <span>Adminatar</span>
+                            <span>{{ userInfo.name }}</span>
                             <img src="@/assets/images/avatar.gif" alt="头像" />
                         </div>
                         <template #dropdown>
@@ -59,7 +59,9 @@
                                 <el-dropdown-item
                                     :command="item"
                                     v-for="item in dropdown"
-                                >{{ item.title }}</el-dropdown-item>
+                                >
+                                    {{ item.title }}
+                                </el-dropdown-item>
                             </el-dropdown-menu>
                         </template>
                     </el-dropdown>
@@ -70,10 +72,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { Search, Bell } from '@element-plus/icons-vue';
-import { useRouter } from 'vue-router';
 import { useStore } from '@/store';
+import { useRouter } from 'vue-router';
 import { CONFIG_MUTATIONS } from '@/store/modules/config/mutation-types';
 
 interface dropdown_types {
@@ -94,6 +96,7 @@ const dropdown:dropdown_types[] = [
 const keyword = ref('');
 const showInput = ref(false);
 const activeName = ref('1');
+const userInfo = computed(() => store.getters.getterUserInfo);
 
 const avatarhandleCommand = (command: dropdown_types) => {
     switch (command.id) {
@@ -181,6 +184,10 @@ const handleClick = (tab: string, event: Event) => {
                 margin-left: 8px;
                 overflow: hidden;
                 transition: width 0.3s;
+                :deep(.el-input__inner) {
+                    height: 26px;
+                    line-height: 26px;
+                }
             }
             &-icon {
                 cursor: pointer;
@@ -194,7 +201,7 @@ const handleClick = (tab: string, event: Event) => {
                 top: 0;
                 right: 5px;
                 color: #fff;
-                font-size: 12px;
+                font-size: $font-size-12;
                 padding: 1px 6px;
                 border-radius: 10px;
                 background-color: red;
@@ -214,5 +221,8 @@ const handleClick = (tab: string, event: Event) => {
 }
 .notice-tabs .el-dropdown-menu__item:hover {
     background-color: transparent;
+}
+.avatar-dropdown-menu .el-dropdown-menu__item:last-of-type {
+    border-top: 1px solid #f0f0f0;
 }
 </style>

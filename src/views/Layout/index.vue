@@ -2,7 +2,7 @@
  * @Author: 大侠传授两招吧
  * @Date: 2022-02-19 15:17:02
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2022-02-20 18:18:08
+ * @LastEditTime: 2022-02-24 13:44:36
  * @Description: 
 -->
 <template>
@@ -10,24 +10,24 @@
         <Slider @collapse="collapseEmit" :isCollapse="isCollapse" />
 
         <div class="layout-content" :style="{ marginLeft: `${isCollapse ? 64 : 210}px` }">
-            <div>
-                <Header />
+            
+            <Header />
 
-                <div class="layout-header-blank"></div>
-                <Navbar :isCollapse="isCollapse" />
+            <div class="layout-header-blank"></div>
+            <Navbar :isCollapse="isCollapse" />
 
-                <div class="layout-main">
-                    <router-view />
-                </div>
-
-                <div class="layout-footer"></div>
+            <div class="layout-main">
+                <router-view />
             </div>
+
+            <div class="layout-footer"></div>
+            
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 import Slider from './Silder.vue';
 import Header from './Header.vue';
@@ -38,6 +38,10 @@ const isCollapse = ref<boolean>(false);
 const collapseEmit = () => {
     isCollapse.value = !isCollapse.value;
 }
+
+onMounted(() => {
+   
+})
 
 </script>
 
@@ -62,7 +66,9 @@ const collapseEmit = () => {
     }
     .layout-main {
         width: 100%;
-        min-height: calc(100vh - $header-height - $navbar-height - $footer-height);
+        min-height: calc(
+            100vh - $header-height - $navbar-height - $footer-height
+        );
     }
 }
 </style>

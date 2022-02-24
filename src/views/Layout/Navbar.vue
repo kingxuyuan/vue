@@ -2,7 +2,7 @@
  * @Author: 大侠传授两招吧
  * @Date: 2022-02-19 17:05:50
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2022-02-21 19:46:32
+ * @LastEditTime: 2022-02-23 19:02:12
  * @Description: 
 -->
 <template>
@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
 import { Close } from '@element-plus/icons-vue';
-import { ref, reactive, watch, nextTick, onMounted } from 'vue';
+import { ref, reactive, watch, nextTick, onMounted, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { MENUS } from '@/router/authRouter';
 
@@ -154,6 +154,10 @@ onMounted(() => {
     document.body.addEventListener('click', hideContentextMenu);
 })
 
+onUnmounted(() => {
+    document.body.removeEventListener('click', hideContentextMenu);
+})
+
 watch(() => route.path, (path) => {
     if (!navs.value.includes(path) && !['/', '/login'].includes(path)) navs.value.push(path);
     currentPath.value = path;
@@ -202,7 +206,7 @@ watch(() => currentPath.value, (args) => {
         &-item {
             min-width: 54px;
             cursor: pointer;
-            padding: 3px 4px;
+            padding: 3px 4px 3px 6px;
             border-radius: 3px;
             border: 1px solid #d8dce5;
             @include flexCenter();
@@ -231,7 +235,7 @@ watch(() => currentPath.value, (args) => {
                 }
             }
             span {
-                font-size: 13px;
+                font-size: $font-size-13;
                 white-space: nowrap;
             }
         }
@@ -252,7 +256,7 @@ watch(() => currentPath.value, (args) => {
 
         &-item {
             padding: 8px 20px;
-            font-size: 12px;
+            font-size: $font-size-12;
             cursor: pointer;
             text-align: left;
             &:hover {
