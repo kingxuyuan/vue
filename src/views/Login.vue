@@ -2,7 +2,7 @@
  * @Author: 大侠传授两招吧
  * @Date: 2022-01-05 18:50:52
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2022-02-24 13:56:11
+ * @LastEditTime: 2022-02-24 15:06:59
  * @Description: 登录页面
 -->
 <template>
@@ -209,6 +209,9 @@ const resetForm = (formEl: FormInstance | undefined) => {
             display: flex;
             align-items: center;
             padding-bottom: 2px;
+        }
+        :deep(.is-error .el-input__inner) {
+            border-color: #f56c6c;
         }
     }
 }
