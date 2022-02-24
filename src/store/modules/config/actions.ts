@@ -2,7 +2,7 @@
  * @Author: 大侠传授两招吧
  * @Date: 2022-01-08 12:07:40
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2022-01-08 14:13:49
+ * @LastEditTime: 2022-02-24 14:43:15
  * @Description: 
  */
 import { ActionTree, ActionContext } from 'vuex';
@@ -26,7 +26,7 @@ export const actions: ActionTree<State, RootState> & Actions = {
     async [CONFIG_ACTIONS.SET_CONFIG_ACTION]({state, commit}, params){
         try {
             const res: any = await configApi();
-            commit(CONFIG_MUTATIONS.SET_CONFIG_MUTATION, res);
+            commit(CONFIG_MUTATIONS.SET_CONFIG_MUTATION, res || {});
         } catch (error) {
             
         }
