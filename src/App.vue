@@ -2,7 +2,7 @@
  * @Author: 大侠传授两招吧
  * @Date: 2022-01-05 15:45:58
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2022-02-24 11:02:30
+ * @LastEditTime: 2022-02-25 18:06:02
  * @Description: 
 -->
 <script setup lang="ts">
@@ -24,12 +24,30 @@ const config = computed(() => store.getters.getterConfig)
 watch(() => config.value, (val) => {
     console.log(val);
 
-})
+});
+
+const imgBase64 = (imgsrc: string) => {
+    const image = new Image();
+    // 解决跨域 Canvas 污染问题
+    image.setAttribute("crossOrigin", "anonymous");
+    image.src = imgsrc;
+    image.onload = function() {
+        const canvas = document.createElement("canvas");
+        canvas.width = image.width;
+        canvas.height = image.height;
+        const context: any = canvas.getContext("2d");
+        context.drawImage(image, 0, 0, image.width, image.height);
+        const url = canvas.toDataURL("image/png"); //得到图片的base64编码数据+
+        localStorage.setItem('img', url);
+    };
+};
+imgBase64('https://img2.baidu.com/it/u=2937803703,3095540904&fm=26&fmt=auto&gp=0.jpg');
+// imgs.value = localStorage.getItem('img') || '';
 
 onMounted(() => {
     // 禁止打开控制台
     // listenerDevtools();
-})
+});
 </script>
 
 <template>
@@ -41,7 +59,6 @@ onMounted(() => {
     <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />-->
 
     <router-view />
-
     <!-- <button @click="$router.push('/home')">去home页</button>
     <button @click="$router.push('/login')">去login页</button>-->
 </template>
