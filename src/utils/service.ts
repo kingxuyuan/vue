@@ -1,138 +1,83 @@
 /*
  * @Author: 大侠传授两招吧
- * @Date: 2021-10-06 22:32:17
+ * @Date: 2022-05-26 16:42:22
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2021-10-07 00:25:13
- * @Description: axios 请求封装
+ * @LastEditTime: 2022-06-24 01:44:26
+ * @Description: 
  */
-import qs from "qs";
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-const { VUE_APP_ENV, VUE_APP_API_URL } = process.env;
 
-// 状态码
-const STATUS_CODE = {
-    400: '请求错误',
-    401: '未授权，请重新登录',
-    403: '拒绝访问',
-    404: '请求出错',
-    408: '请求超时',
-    500: '服务器错误',
-    501: '服务未实现',
-    502: '网络错误',
-    503: '服务不可用',
-    504: '网络超时',
-    505: 'HTTP版本不受支持',
+const { VUE_APP_ENV } = process.env;
+
+// generateReqKey：用于根据当前请求的信息，生成请求 Key
+const generateReqKey = (config: AxiosRequestConfig) => {
+    const { method, url, params, data } = config;
+    return [method, url, JSON.stringify(params), JSON.stringify(data)].join("&");
 }
+// addPendingRequest：用于把当前请求信息添加到 pendingRequest 对象中
+export const pendingRequests = new Map();
 
-// 声明一个 Map 用于存储每个请求的标识 和 取消函数
-const pending = new Map()
-/**
- * 添加请求
- * @param {Object} config 
- */
-const addPending = (config: AxiosRequestConfig) => {
-    const url = [
-        config.method,
-        config.url,
-        qs.stringify(config.params),
-        qs.stringify(config.data)
-    ].join('&')
-    config.cancelToken = config.cancelToken || new axios.CancelToken(cancel => {
-        if (!pending.has(url)) { // 如果 pending 中不存在当前请求，则添加进去
-            pending.set(url, cancel)
+const addPendingRequest = (config: AxiosRequestConfig) => {
+    const requestKey = generateReqKey(config);
+    config.cancelToken = config.cancelToken || new axios.CancelToken((cancel: any) => {
+        if (!pendingRequests.has(requestKey)) {
+            pendingRequests.set(requestKey, cancel);
         }
-    })
+    });
 }
-/**
- * 移除请求
- * @param {Object} config 
- */
-const removePending = (config: AxiosRequestConfig) => {
-    const url = [
-        config.method,
-        config.url,
-        qs.stringify(config.params),
-        qs.stringify(config.data)
-    ].join('&')
-    if (pending.has(url)) { // 如果在 pending 中存在当前请求标识，需要取消当前请求，并且移除
-        const cancel = pending.get(url)
-        cancel(url)
-        pending.delete(url)
+// removePendingRequest：检查是否存在重复请求，若存在则取消已发的请求
+const removePendingRequest = (config: AxiosRequestConfig) => {
+    const requestKey = generateReqKey(config);
+    if (pendingRequests.has(requestKey)) {
+        const cancelToken = pendingRequests.get(requestKey);
+        cancelToken(requestKey);
+        pendingRequests.delete(requestKey);
     }
+}
+// clearPending 清空 pending 中的请求（在路由跳转时调用）
+export const clearPending = () => {
+    for (const [requestKey, cancelToken] of pendingRequests) {
+        cancelToken(requestKey)
+    }
+    pendingRequests.clear()
 }
 
-/**
- * 清空 pending 中的请求（在路由跳转时调用）
- */
-export const clearPending = () => {
-    for (const [url, cancel] of pending) {
-        cancel(url)
-    }
-    pending.clear()
-}
 
 const service = axios.create({ // 联调 production
-    baseURL: VUE_APP_ENV === 'development' ? '/' : VUE_APP_API_URL,
-    timeout: 15000,
-    // headers: {
-    //     get: {
-    //         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-    //     },
-    //     post: {
-    //         'Content-Type': 'application/json;charset=utf-8'
-    //     }
-    // },
-    // 是否跨站点访问控制请求
-    // withCredentials: true,
-    // transformRequest: [(data) => {
-    //     data = JSON.stringify(data)
-    //     return data
-    // }],
-    // validateStatus() {
-    //     // 使用async-await，处理reject情况较为繁琐，所以全部返回resolve，在业务代码中处理异常
-    //     return true
-    // },
-    // transformResponse: [(data) => {
-    //     if (typeof data === 'string' && data.startsWith('{')) {
-    //         data = JSON.parse(data)
-    //     }
-    //     return data
-    // }]
-})
+    baseURL: VUE_APP_ENV === 'dev' ? '' : 'VUE_APP_URL',
+    timeout: 1500000,
+});
 
-// 添加请求拦截器
-service.interceptors.request.use((config: AxiosRequestConfig | any) => {
-    removePending(config) // 在请求开始前，对之前的请求做检查取消操作
-    addPending(config) // 将当前请求添加到 pending 中
-    // config.headers['token'] = 'token';
-    config.headers['Cache-Control'] = 'no-cache, no-store' // 清除缓存
-    // config.headers['Pragma'] = 'no-cache' // 清除缓存
-
-    // 设置公共参数
-    // config.params = { device: equipment };
-
+service.interceptors.request.use((config: AxiosRequestConfig) => {
+    // config.baseURL = import.meta.env.VUE_APP_URL + '/';
+    removePendingRequest(config);   // 检查是否存在重复请求，若存在则取消已发的请求
+    addPendingRequest(config);      // 把当前请求信息添加到pendingRequest对象中
     return config;
-}, error => {
-    // 错误抛到业务代码
-    //   error.data = {}
-    //   error.data.msg = '服务器异常，请联系管理员！'
-    return Promise.reject(error)
-})
+}, err => {
+    // 这里出现错误可能是网络波动造成的，清空 pendingRequests 对象
+    console.log("err: "+ err);
+    pendingRequests.clear();
+    return Promise.reject(err);
+});
 
-// 响应拦截
 service.interceptors.response.use((res: AxiosResponse) => {
-    // removePending(res) // 在请求结束后，移除本次请求
-    return res.data;
-}, error => {
-    if (axios.isCancel(error)) {
-        console.log('repeated request: ' + error.message)
+    removePendingRequest(res.config); // 从pendingRequest对象中移除请求
+    if (res.status !== 200) {
+        return res as any;
     } else {
-        // handle error code
-        // 错误抛到业务代码
-        error.data = {}
-        error.data.msg = '请求超时或服务器异常，请检查网络或联系管理员！'
+        // if (res.data?.data?.code !== 0 && res.data?.data?.msg) Toast(res.data?.data.msg);
+
+        return res.data;
     }
-    return Promise.reject(error)
-})
+}, err => {
+    removePendingRequest(err.config || {}); // 从pendingRequest对象中移除请求
+    if (axios.isCancel(err)) {
+        console.warn(err);
+        return Promise.reject(err);
+    } else {
+        // 添加其它异常处理
+    }
+    return Promise.reject(err);
+});
 
 export default service;

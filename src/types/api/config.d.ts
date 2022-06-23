@@ -1,18 +1,15 @@
 /*
  * @Author: 大侠传授两招吧
- * @Date: 2021-10-06 20:12:31
+ * @Date: 2022-05-26 14:02:20
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2021-11-15 02:21:44
- * @Description: config 接口类型定义
+ * @LastEditTime: 2022-06-03 22:50:30
+ * @Description: 
  */
-interface LIVE_CLASS_Item {
-    des: string
-    id: number
-    name: string
-    thumb: string
-}
-
 export interface config_types {
-    LIVE_CHAT_ANNOUNCEMENT: string
-    LIVE_CLASS: LIVE_CLASS_Item[]
+    apk_url: string
+    app_ios: string
+    chat_announcement: string
+    chat_visitor_chat__switch: string
+    chat_visitor_record_infofold__switch: string
+    chin_lift: string
 }

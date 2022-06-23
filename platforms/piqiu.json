@@ -1,0 +1,13 @@
+{
+    "name": "皮球直播",
+    "dev": {
+        "live_url": "https://www.baidu.com",
+        "sports_url": "https://www.baidu.com",
+        "ws_url": "https://www.baidu.com"
+    },
+    "prod": {
+        "live_url": "https://www.baidu.com",
+        "sports_url": "https://www.baidu.com",
+        "ws_url": "https://www.baidu.com"
+    }
+}

@@ -1,15 +1,15 @@
 /*
  * @Author: 大侠传授两招吧
- * @Date: 2021-10-06 22:31:02
+ * @Date: 2022-05-26 16:47:26
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2021-11-15 02:11:59
- * @Description: config 接口
+ * @LastEditTime: 2022-06-04 21:02:35
+ * @Description: 
  */
+import { AxiosPromise } from 'axios';
 import service from '@/utils/service';
-import { HttpResponse } from '@/types/service';
+import { response_data_types } from '@/types/service';
+import { config_types } from '@/types/api/config';
+import { axiosOptions } from '@/utils/tools';
 
-export const configApi = (): Promise<HttpResponse> => service('/live', {
-    params: {
-        service: 'Home.getConfig'
-    }
-})
+// 配置接口  
+export const configApi = (): AxiosPromise<response_data_types<config_types>> => service(axiosOptions('Home.getConfig'));

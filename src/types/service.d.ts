@@ -1,17 +1,24 @@
 /*
  * @Author: 大侠传授两招吧
- * @Date: 2021-10-06 23:33:02
+ * @Date: 2022-05-26 14:02:20
  * @LastEditors: 大侠传授两招吧
- * @LastEditTime: 2021-10-06 23:33:02
- * @Description: 接口响应通过格式
+ * @LastEditTime: 2022-06-04 03:43:29
+ * @Description: 
  */
+export interface response_types {
+    msg: string
+    ret: number
+    data: object
+}
 
-export interface HttpResponse {
-    status: number
-    statusText: string
-    data: {
-        code: number
-        desc: string
-        [key: string]: any
-    }
+export interface response_data_no_types {
+    code: number
+    msg: string
+    info: any[]
+}
+
+export interface response_data_types<D> {
+    code: number
+    msg: string
+    info: D[]
 }
